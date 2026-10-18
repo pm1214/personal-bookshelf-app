@@ -3,6 +3,8 @@ import { TestDb } from './harness';
 
 const ALICE = '00000000-0000-0000-0000-00000000000a';
 const BOB = '00000000-0000-0000-0000-00000000000b';
+/** RLS か、マイグレーション2の所有者チェックトリガーのどちらかで拒否されたこと */
+const DENIED = /row-level security|参照先が見つからないか、使えません/;
 
 let t: TestDb;
 let kindle: string;
@@ -49,7 +51,8 @@ describe('テーブル構成', () => {
   it('既定のストアが入っている', async () => {
     await t.as({ kind: 'user', id: ALICE });
     const r = await t.rows<{ code: string }>('select code from stores order by sort_order');
-    expect(r.map((x) => x.code)).toEqual(['kindle', 'kobo', 'ebookjapan', 'bookwalker', 'honto', 'dmm', 'paper']);
+    // マイグレーション2でコミックシーモア（cmoa）を追加
+    expect(r.map((x) => x.code)).toEqual(['kindle', 'kobo', 'ebookjapan', 'bookwalker', 'honto', 'dmm', 'cmoa', 'paper']);
   });
 });
 
@@ -80,7 +83,7 @@ describe('仕様の例：1〜10 Kindle、11〜15 Kobo、17 未購入、18 両方
   });
 
   it('missing_volumes は 17巻だけ', async () => {
-    const r = await t.rows<{ label: string }>('select label from missing_volumes where series_id = $1 order by sort_key', [aliceSeries]);
+    const r = await t.rows<{ label: string }>('select label from missing_volumes where series_id = $1 order by number', [aliceSeries]);
     expect(r.map((x) => x.label)).toEqual(['17']);
   });
 
@@ -95,13 +98,13 @@ describe('仕様の例：1〜10 Kindle、11〜15 Kobo、17 未購入、18 両方
   it('購入予定にした巻を所持にすると、予定は消える', async () => {
     const v17 = await volId(aliceSeries, '17');
     await t.rows(`insert into ownerships (user_id, volume_id, store_id, state) values ($1, $2, $3, 'planned')`, [ALICE, v17, kindle]);
-    let m = await t.one<{ planned: boolean }>('select planned from missing_volumes where volume_id = $1', [v17]);
-    expect(m.planned).toBe(true);
+    // マイグレーション2：購入予定の巻は抜け巻に出さない（TypeScript の summarize と同じ）
+    expect(await t.rows('select 1 from missing_volumes where volume_id = $1', [v17])).toHaveLength(0);
+    expect((await t.one<{ planned_count: number }>('select planned_count::int from series_progress where series_id = $1', [aliceSeries])).planned_count).toBe(1);
     await t.rows('select apply_store_range($1, $2, $3, true)', [aliceSeries, ['17'], kindle]);
     const r = await t.rows<{ state: string }>('select state from ownerships where volume_id = $1', [v17]);
     expect(r.map((x) => x.state)).toEqual(['owned']);
     expect(await t.rows('select 1 from missing_volumes where series_id = $1', [aliceSeries])).toHaveLength(0);
-    m = { planned: false };
   });
 
   it('外すと消える', async () => {
@@ -113,7 +116,8 @@ describe('仕様の例：1〜10 Kindle、11〜15 Kobo、17 未購入、18 両方
     await t.rows(`insert into volumes (series_id, sort_key, label, owner_id) values ($1, 10.5, '10.5', $2), ($1, 18.9, '外伝', $2)`, [aliceSeries, ALICE]);
     const msg = await t.fails(`insert into volumes (series_id, sort_key, label, owner_id) values ($1, 18.9, '外伝', $2)`, [aliceSeries, ALICE]);
     expect(msg).toMatch(/duplicate key/);
-    const order = await t.rows<{ label: string }>('select label from volumes where series_id = $1 order by sort_key, label', [aliceSeries]);
+    // マイグレーション2：並びは 組（数字→上下→外伝）→ 値 → ラベル
+    const order = await t.rows<{ label: string }>('select label from volumes where series_id = $1 order by sort_group, sort_key, label', [aliceSeries]);
     expect(order.map((x) => x.label).slice(9, 12)).toEqual(['10', '10.5', '11']);
     expect(order.at(-1)!.label).toBe('外伝');
   });
@@ -141,13 +145,14 @@ describe('RLS：他人のデータ', () => {
     const v = await volId(aliceSeries, '1');
     await t.as({ kind: 'user', id: BOB });
     const msg = await t.fails('insert into ownerships (user_id, volume_id, store_id) values ($1, $2, $3)', [BOB, v, kindle]);
-    expect(msg).toMatch(/row-level security/);
+    // マイグレーション2のトリガーが RLS より先に拒否する（どちらでも拒否されればよい）
+    expect(msg).toMatch(DENIED);
   });
 
   it('ボブはアリスのシリーズに巻を足せない', async () => {
     await t.as({ kind: 'user', id: BOB });
     const msg = await t.fails(`insert into volumes (series_id, sort_key, label, owner_id) values ($1, 99, '99', $2)`, [aliceSeries, BOB]);
-    expect(msg).toMatch(/row-level security/);
+    expect(msg).toMatch(DENIED);
   });
 
   it('ボブがアリスの所持を消そうとしても0行', async () => {
@@ -170,7 +175,7 @@ describe('RLS：共有データ', () => {
     await t.as({ kind: 'user', id: BOB });
     await t.rows('insert into user_series (user_id, series_id, known_total) values ($1, $2, 3)', [BOB, sharedSeries]);
     await t.rows('select apply_store_range($1, $2, $3, true)', [sharedSeries, ['1'], kobo]);
-    expect((await t.rows<{ label: string }>('select label from missing_volumes order by sort_key')).map((x) => x.label)).toEqual(['2', '3']);
+    expect((await t.rows<{ label: string }>('select label from missing_volumes order by number')).map((x) => x.label)).toEqual(['2', '3']);
 
     await t.as({ kind: 'user', id: ALICE });
     expect(await t.rows('select * from series where id = $1', [sharedSeries])).toHaveLength(1);
@@ -195,9 +200,9 @@ describe('RLS：共有データ', () => {
 
   it('自分専用のストアを作れて、他人には見えない', async () => {
     await t.as({ kind: 'user', id: ALICE });
-    await t.rows(`insert into stores (name, owner_id) values ('コミックシーモア', $1)`, [ALICE]);
+    await t.rows(`insert into stores (name, owner_id) values ('アリスの古本屋', $1)`, [ALICE]);
     await t.as({ kind: 'user', id: BOB });
-    expect(await t.rows(`select 1 from stores where name = 'コミックシーモア'`)).toHaveLength(0);
+    expect(await t.rows(`select 1 from stores where name = 'アリスの古本屋'`)).toHaveLength(0);
   });
 });
 

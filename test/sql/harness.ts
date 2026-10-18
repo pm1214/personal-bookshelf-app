@@ -37,13 +37,25 @@ export type Role = { kind: 'anon' } | { kind: 'user'; id: string } | { kind: 'se
 export class TestDb {
   private constructor(readonly db: PGlite) {}
 
-  static async create(): Promise<TestDb> {
+
+  /**
+   * マイグレーションを順に流した DB を作る。
+   * `before` を渡すと、そのファイル名で始まるマイグレーションの直前に呼ぶ（既存データの移行テスト用）。
+   */
+  static async create(opts: { before?: { migration: string; run: (t: TestDb) => Promise<void> } } = {}): Promise<TestDb> {
     const db = new PGlite();
     await db.exec(SUPABASE_STUB);
-    for (const f of readdirSync(MIGRATIONS_DIR).filter((x) => x.endsWith('.sql')).sort()) {
+    const t = new TestDb(db);
+    for (const f of TestDb.migrationFiles()) {
+      if (opts.before && f.startsWith(opts.before.migration)) await opts.before.run(t);
+      await db.exec('reset role');
       await db.exec(readFileSync(join(MIGRATIONS_DIR, f), 'utf8'));
     }
-    return new TestDb(db);
+    return t;
+  }
+
+  static migrationFiles(): string[] {
+    return readdirSync(MIGRATIONS_DIR).filter((x) => x.endsWith('.sql')).sort();
   }
 
   async createUser(id: string): Promise<string> {

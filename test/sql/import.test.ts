@@ -74,7 +74,7 @@ describe('検索結果 → 共有マスタ → ユーザーの本棚', () => {
     await t.rows('insert into user_series (user_id, series_id, known_total) values ($1, $2, $3)', [USER, seriesId, plan.suggestedKnownTotal]);
     const kindle = (await t.one<{ id: string }>(`select id from stores where code = 'kindle'`)).id;
     await t.rows('select apply_store_range($1, $2, $3, true)', [seriesId, ['1', '2', '3'], kindle]);
-    const missing = await t.rows<{ label: string }>('select label from missing_volumes where series_id = $1 order by sort_key', [seriesId]);
+    const missing = await t.rows<{ label: string }>('select label from missing_volumes where series_id = $1 order by number', [seriesId]);
     // 検索結果に無かった4巻も巻の行があるので、抜け巻として出る
     expect(missing.map((m) => m.label)).toEqual(['4', '5', '6', '7']);
   });

@@ -115,7 +115,8 @@ export function parseVolumeLabel(input: unknown): ParseLabelResult {
 
   // それ以外は名前付きの巻（外伝・短編集・番外編など）
   s = core;
-  if (s.length > LIMITS.maxLabelLength) return { ok: false, error: `巻の表記は${LIMITS.maxLabelLength}文字までです` };
+  // 文字数はコードポイントで数える（DB の char_length と同じ）
+  if ([...s].length > LIMITS.maxLabelLength) return { ok: false, error: `巻の表記は${LIMITS.maxLabelLength}文字までです` };
   if (/^\d/.test(s) && /\d{4,}/.test(s)) return { ok: false, error: `巻番号は${LIMITS.maxVolumeNumber}までです` };
   if (/[,、;；|]/.test(s)) return { ok: false, error: '巻の表記にカンマや | は使えません' };
   return { ok: true, value: { key: `x:${s}`, label: s, kind: 'named', sortGroup: SORT_GROUP.named, sortValue: 0 } };
