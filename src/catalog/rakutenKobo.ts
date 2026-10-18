@@ -5,6 +5,8 @@
  *   エンドポイント: https://openapi.rakuten.co.jp/services/api/Kobo/EbookSearch/20170426
  *
  * - accessKey はブラウザに出さないこと（Next.js の Route Handler など、サーバ側だけで使う）
+ * - 公式ドキュメントでは accessKey は「ヘッダー または クエリパラメーター」で指定できる。
+ *   URL はアクセスログ等に残りやすいので、既定ではヘッダーだけで送る（keyInQuery: true でURLにも付ける）
  * - 短時間の大量アクセスは一時停止の対象になるので、ページ間で待つ
  * - 結果0件は HTTP 404 / error=not_found で返るので、空の結果として扱う
  * - fetch を差し替えられるようにしてあり、テストは実APIを呼ばない
@@ -50,6 +52,8 @@ export interface KoboClientOptions {
   accessKey: string;
   /** 楽天のアプリ設定に登録した Web サイト URL（Referer の確認がある場合に必要） */
   referer?: string;
+  /** accessKey を URL にも付ける（ヘッダーで通らない場合だけ。既定 false） */
+  keyInQuery?: boolean;
   /** 取得する最大ページ数（1ページ30件。既定 4 = 最大120件） */
   maxPages?: number;
   /** ページ間の待ち時間（ミリ秒。既定 1000） */
@@ -105,10 +109,13 @@ export interface KoboSearchResult {
   truncated: boolean;
 }
 
-export function buildKoboUrl(params: KoboSearchParams, page: number, opts: Pick<KoboClientOptions, 'applicationId' | 'accessKey'>): string {
+export function buildKoboUrl(
+  params: KoboSearchParams,
+  page: number,
+  opts: Pick<KoboClientOptions, 'applicationId' | 'accessKey' | 'keyInQuery'>,
+): string {
   const q = new URLSearchParams({
     applicationId: opts.applicationId,
-    accessKey: opts.accessKey,
     format: 'json',
     formatVersion: '2',
     hits: '30',
@@ -120,6 +127,7 @@ export function buildKoboUrl(params: KoboSearchParams, page: number, opts: Pick<
     const v = params[k]?.trim();
     if (v) q.set(k, v);
   }
+  if (opts.keyInQuery) q.set('accessKey', opts.accessKey);
   return `${KOBO_ENDPOINT}?${q.toString()}`;
 }
 

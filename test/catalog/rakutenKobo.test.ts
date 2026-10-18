@@ -11,8 +11,15 @@ describe('buildKoboUrl', () => {
     const u = new URL(buildKoboUrl({ title: '星屑ノート', author: ' ' }, 2, KEYS));
     expect(u.origin + u.pathname).toBe('https://openapi.rakuten.co.jp/services/api/Kobo/EbookSearch/20170426');
     const q = Object.fromEntries(u.searchParams);
-    expect(q).toMatchObject({ applicationId: 'APP', accessKey: 'KEY', formatVersion: '2', hits: '30', page: '2', koboGenreId: '101', sort: '+releaseDate', title: '星屑ノート' });
+    expect(q).toMatchObject({ applicationId: 'APP', formatVersion: '2', hits: '30', page: '2', koboGenreId: '101', sort: '+releaseDate', title: '星屑ノート' });
     expect(q.author).toBeUndefined(); // 空白だけの項目は送らない
+    // ⑦ 既定では accessKey を URL に載せない（ヘッダーで送る）
+    expect(q.accessKey).toBeUndefined();
+    expect(u.toString()).not.toContain('KEY');
+  });
+
+  it('keyInQuery: true のときだけ URL にも accessKey を付ける', () => {
+    expect(new URL(buildKoboUrl({ title: 'a' }, 1, { ...KEYS, keyInQuery: true })).searchParams.get('accessKey')).toBe('KEY');
   });
 });
 

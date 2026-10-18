@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { isIntegerLabel, kanjiToInt, normalizeLabel, sortKeyForLabel } from '../src/volume/label';
 import { parseVolumeTitle, seriesKey } from '../src/volume/parseVolumeTitle';
@@ -85,5 +87,17 @@ describe('parseVolumeTitle', () => {
     const a = seriesKey(parseVolumeTitle('作品名！ 1 (レーベル)').baseTitle);
     const b = seriesKey(parseVolumeTitle('作品名!（2）').baseTitle);
     expect(a).toBe(b);
+  });
+});
+
+describe('parseVolumeTitle：共有の正解表（TS と Python で同じ表）', () => {
+  const cases: Array<{ title: string; label: string | null; kind: string; special: boolean }> = JSON.parse(
+    readFileSync(join(import.meta.dirname, '../fixtures/volume-title-cases.json'), 'utf8'),
+  ).cases;
+  it.each(cases.map((c) => [c.title, c] as const))('%s', (_, c) => {
+    const p = parseVolumeTitle(c.title);
+    expect(p.label || null).toBe(c.label);
+    expect(p.kind).toBe(c.kind);
+    expect(p.special).toBe(c.special);
   });
 });
