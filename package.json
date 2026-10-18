@@ -8,11 +8,17 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "fixtures": "node scripts/make-fixtures.mjs"
+    "fixtures": "node scripts/make-fixtures.mjs",
+    "build:demo": "node scripts/build-demo.mjs",
+    "test:e2e": "npm run build:demo && playwright test",
+    "test:py": "python3 -m unittest discover -s tools",
+    "test:all": "npm run typecheck && npm test && npm run test:py && npm run test:e2e"
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.5.8",
+    "@playwright/test": "1.56.0",
     "@types/node": "22.18.0",
+    "esbuild": "0.25.10",
     "typescript": "5.8.3",
     "vitest": "3.2.4"
   },

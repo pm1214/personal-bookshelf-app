@@ -1,0 +1,5 @@
+itemNumber,title,expected_label,expected_category
+,作品名（1）,1,main
+,作品名 3 特装版,3,special
+,作品名【単話版】 第25話,,episode
+,作品名 外伝 (2),2,spinoff
