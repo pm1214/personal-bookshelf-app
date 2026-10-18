@@ -141,7 +141,7 @@ describe('② 付け替え・参照による他人のデータへのアクセス
     // 所有者チェック（20_）と変更禁止（30_）の両方が拒否する。先に動いた方の文が出る
     expect(await t.fails('update volumes set series_id = $1 where id = $2', [aliceSeries, v])).toMatch(/変更できません|参照先が見つからない/);
     const o = await one<{ id: string }>('select id from ownerships where user_id = $1 limit 1', [ALICE]);
-    expect(await t.fails('update ownerships set user_id = $1 where id = $2', [BOB, o.id])).toMatch(/変更できません/);
+    expect(await t.fails('update ownerships set user_id = $1 where id = $2', [BOB, o.id])).toMatch(/変更できません|参照先が見つからない/);
     expect(await t.fails('update series set owner_id = $1 where id = $2', [BOB, aliceSeries])).toMatch(/変更できません/);
   });
 
