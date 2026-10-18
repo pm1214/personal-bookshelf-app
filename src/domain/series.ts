@@ -1,17 +1,40 @@
 /**
  * 画面側で使う、シリーズと巻の純粋なロジック。
- * DB 側（supabase/migrations）の missing_volumes ビューと同じ定義にしてある。
+ *
+ * 抜け巻の定義（DB の missing_volumes ビューと同じ。test/sql/parity.test.ts で一致を確認）
+ *   1〜既刊数の整数の巻のうち、どのストアでも所持していない巻。
+ *   巻の行が無い番号も抜け巻に数える（既刊数 18 で巻が 1〜15 しか無ければ 16〜18 も抜け）。
+ *   購入予定の巻は missing には入れず planned に分ける。
+ *
+ * 既刊数を減らしても、所持・既読・購入予定の記録は消さない（記録のない巻だけ消す）。
  */
-import { compareVolumes, isIntegerLabel, normalizeLabel, sortKeyForLabel } from '../volume/label';
+import { LIMITS } from '../limits';
 import type { RangeAction, RangeOp } from '../range/parseRangeText';
+import {
+  compareIdent,
+  identOrThrow,
+  isCountedNumber,
+  numberKey,
+  parseVolumeLabel,
+  validateKnownTotal,
+  VolumeInputError,
+  type VolumeIdent,
+  type VolumeKind,
+} from '../volume/volumeKey';
 
 export interface VolumeState {
   id: string;
+  /** 巻の識別子（"n:10.5" / "p:上" / "x:外伝" / "single"）。作品内で一意 */
+  key: string;
+  /** 表示用ラベル */
   label: string;
+  kind: VolumeKind;
+  sortGroup: number;
+  /** 組の中の並び値（数字の巻はその値） */
   sortKey: number;
-  /** 所持しているストアのID（同じ巻を複数ストアで持てる）。 */
+  /** 所持しているストアのID（同じ巻を複数ストアで持てる） */
   stores: string[];
-  /** 購入予定（所持していない巻だけに意味がある）。 */
+  /** 購入予定（所持していない巻だけに意味がある） */
   planned: boolean;
   read: boolean;
 }
@@ -19,76 +42,115 @@ export interface VolumeState {
 export interface SeriesState {
   id: string;
   title: string;
-  /** 既刊数（ユーザーが入れる値）。巻数のない本は 0。 */
+  /** 既刊数（ユーザーが入れる値）。巻数のない本は 0 */
   knownTotal: number;
   volumes: VolumeState[];
 }
 
 export type NewId = () => string;
 
-export function hasData(v: VolumeState): boolean {
+export function hasData(v: Pick<VolumeState, 'stores' | 'planned' | 'read'>): boolean {
   return v.stores.length > 0 || v.planned || v.read;
 }
 
-export function makeVolume(label: string, existing: readonly VolumeState[], newId: NewId): VolumeState {
-  const l = normalizeLabel(label);
+export function fromIdent(ident: VolumeIdent, newId: NewId): VolumeState {
   return {
     id: newId(),
-    label: l,
-    sortKey: sortKeyForLabel(l, existing.map((v) => v.sortKey)),
+    key: ident.key,
+    label: ident.label,
+    kind: ident.kind,
+    sortGroup: ident.sortGroup,
+    sortKey: ident.sortValue,
     stores: [],
     planned: false,
     read: false,
   };
 }
 
+/** 巻を1つ作る。入力が不正（上限超えなど）なら VolumeInputError。 */
+export function makeVolume(label: string, _existing: readonly VolumeState[], newId: NewId): VolumeState {
+  return fromIdent(identOrThrow(label), newId);
+}
+
+const byOrder = (a: VolumeState, b: VolumeState) =>
+  compareIdent({ sortGroup: a.sortGroup, sortValue: a.sortKey, label: a.label }, { sortGroup: b.sortGroup, sortValue: b.sortKey, label: b.label });
+
 /**
  * 既刊数に合わせて巻をそろえる。
  * - 1〜knownTotal の整数巻が無ければ作る
  * - knownTotal より後ろの整数巻は、記録が無ければ消し、記録があれば残す
- * - 10.5巻・上下・外伝はそのまま
+ * - 0巻・10.5巻・上下・外伝はそのまま
+ * - knownTotal が上限を超える・負の数なら VolumeInputError（大量の巻を作らない）
  */
 export function ensureVolumes(s: SeriesState, newId: NewId): SeriesState {
+  const kt = validateKnownTotal(s.knownTotal);
+  if (!kt.ok) throw new VolumeInputError(kt.error);
   const volumes = [...s.volumes];
-  const labels = new Set(volumes.map((v) => v.label));
-  for (let n = 1; n <= s.knownTotal; n++) {
-    if (!labels.has(String(n))) volumes.push(makeVolume(String(n), volumes, newId));
+  const keys = new Set(volumes.map((v) => v.key));
+  for (let n = 1; n <= kt.value; n++) {
+    if (!keys.has(numberKey(n))) volumes.push(fromIdent(identOrThrow(String(n)), newId));
   }
-  const kept = volumes.filter((v) => !(isIntegerLabel(v.label) && Number(v.label) > s.knownTotal && !hasData(v)));
-  kept.sort(compareVolumes);
-  return { ...s, volumes: kept };
+  const kept = volumes.filter((v) => !(isCountedNumber({ kind: v.kind, sortValue: v.sortKey }) && v.sortKey > kt.value && !hasData(v)));
+  if (kept.length > LIMITS.maxVolumesPerSeries) {
+    throw new VolumeInputError(`1作品の巻は${LIMITS.maxVolumesPerSeries}までです`);
+  }
+  kept.sort(byOrder);
+  return { ...s, knownTotal: kt.value, volumes: kept };
+}
+
+/** 既刊数を変える。記録のある巻は消さない。 */
+export function setKnownTotal(s: SeriesState, total: unknown, newId: NewId): SeriesState {
+  const kt = validateKnownTotal(total);
+  if (!kt.ok) throw new VolumeInputError(kt.error);
+  return ensureVolumes({ ...s, knownTotal: kt.value }, newId);
+}
+
+export interface MissingVolume {
+  key: string;
+  label: string;
+  number: number;
+  /** 巻の行が無い番号は null */
+  volumeId: string | null;
 }
 
 export interface SeriesSummary {
   ownedCount: number;
-  /** 抜け巻：1〜既刊数の整数巻で、どのストアでも持っておらず、予定でもない巻。 */
-  missing: VolumeState[];
+  /** 抜け巻：1〜既刊数の整数巻で、所持していない巻（行が無い番号も含む）。購入予定は除く */
+  missing: MissingVolume[];
+  /** 購入予定（所持していない巻） */
   planned: VolumeState[];
   readCount: number;
   storesUsed: string[];
-  /** 1〜既刊数のうち所持している割合（0〜100）。 */
+  /** 1〜既刊数のうち所持している割合（0〜100） */
   percent: number;
-  /** 既刊数より後ろにあり、記録が残っている整数巻。 */
+  /** 既刊数より後ろにあり、記録が残っている整数巻 */
   beyondKnownTotal: VolumeState[];
 }
 
 export function summarize(s: SeriesState): SeriesSummary {
-  const inRange = s.volumes.filter((v) => isIntegerLabel(v.label) && Number(v.label) <= s.knownTotal);
+  const byKey = new Map(s.volumes.map((v) => [v.key, v]));
+  const total = Math.max(0, Math.min(Math.floor(s.knownTotal) || 0, LIMITS.maxKnownTotal));
+  const missing: MissingVolume[] = [];
+  let ownedInRange = 0;
+  for (let n = 1; n <= total; n++) {
+    const v = byKey.get(numberKey(n));
+    if (v?.stores.length) ownedInRange++;
+    else if (!v?.planned) missing.push({ key: numberKey(n), label: String(n), number: n, volumeId: v?.id ?? null });
+  }
   const owned = s.volumes.filter((v) => v.stores.length);
-  const ownedInRange = inRange.filter((v) => v.stores.length).length;
-  const percent = s.knownTotal
-    ? Math.round((100 * ownedInRange) / s.knownTotal)
+  const percent = total
+    ? Math.round((100 * ownedInRange) / total)
     : s.volumes.length
       ? Math.round((100 * owned.length) / s.volumes.length)
       : 0;
   return {
     ownedCount: owned.length,
-    missing: inRange.filter((v) => !v.stores.length && !v.planned),
+    missing,
     planned: s.volumes.filter((v) => !v.stores.length && v.planned),
     readCount: s.volumes.filter((v) => v.read).length,
     storesUsed: [...new Set(owned.flatMap((v) => v.stores))],
     percent,
-    beyondKnownTotal: s.volumes.filter((v) => isIntegerLabel(v.label) && Number(v.label) > s.knownTotal),
+    beyondKnownTotal: s.volumes.filter((v) => isCountedNumber({ kind: v.kind, sortValue: v.sortKey }) && v.sortKey > total),
   };
 }
 
@@ -114,18 +176,33 @@ export interface ApplyResult {
 
 /**
  * parseRangeText の結果をシリーズに反映する。無い巻は作る。
- * 整数巻を既刊数より後ろに作った場合は、既刊数をそこまで伸ばす。
+ * 整数巻を既刊数より後ろに作った場合は、既刊数をそこまで伸ばす（上限 LIMITS.maxKnownTotal）。
+ * 上限を超える巻・巻数が含まれていれば、何も変えずに VolumeInputError。
  */
 export function applyRangeOps(s: SeriesState, ops: readonly RangeOp[], newId: NewId): ApplyResult {
-  let volumes = [...s.volumes];
+  // parseRangeText を通らずに作られた ops も、ここでもう一度確かめる（多重防御）
+  let count = 0;
+  for (const op of ops) {
+    for (const t of op.targets ?? op.labels.map((l) => identOrThrow(l))) {
+      const r = parseVolumeLabel(t.label);
+      if (!r.ok) throw new VolumeInputError(r.error);
+      count++;
+    }
+  }
+  if (count > LIMITS.maxTargetsPerInput) throw new VolumeInputError(`1回で変更できるのは${LIMITS.maxTargetsPerInput}巻までです`);
+
+  const volumes = [...s.volumes];
+  const index = new Map(volumes.map((v, i) => [v.key, i]));
   let touched = 0;
   let created = 0;
   for (const op of ops) {
-    for (const label of op.labels) {
-      let i = volumes.findIndex((v) => v.label === label);
-      if (i < 0) {
-        volumes.push(makeVolume(label, volumes, newId));
+    const targets = op.targets ?? op.labels.map((l) => identOrThrow(l));
+    for (const t of targets) {
+      let i = index.get(t.key);
+      if (i === undefined) {
+        volumes.push(fromIdent(t, newId));
         i = volumes.length - 1;
+        index.set(t.key, i);
         created++;
       }
       let v = volumes[i]!;
@@ -136,7 +213,7 @@ export function applyRangeOps(s: SeriesState, ops: readonly RangeOp[], newId: Ne
   }
   const maxInt = Math.max(
     0,
-    ...volumes.filter((v) => isIntegerLabel(v.label) && hasData(v)).map((v) => Number(v.label)),
+    ...volumes.filter((v) => isCountedNumber({ kind: v.kind, sortValue: v.sortKey }) && hasData(v)).map((v) => v.sortKey),
   );
   const next = ensureVolumes({ ...s, volumes, knownTotal: Math.max(s.knownTotal, maxInt) }, newId);
   return { series: next, touched, created };

@@ -1,12 +1,17 @@
 /**
  * 「まとめて入力」のパーサ。
  *
- *   "1-10 kindle, 11-15 kobo, 18 kindle kobo, 19 予定, 10.5 bw, 上 紙"
+ *   "1-10 kindle, 11-15 kobo, 18 kindle kobo, 19 予定, 10.5 bw, 上 紙, 外伝 kindle"
  *
  * 入力を解釈して「どの巻に何をするか」の一覧を返すだけで、データは変更しない（純粋関数）。
- * 1か所でも分からない語があれば errors に入れ、呼び出し側は何も反映しない運用にする。
+ * 1か所でも分からない語や上限を超える巻があれば errors に入れ、呼び出し側は何も反映しない運用にする。
+ *
+ * 上限（src/limits.ts）
+ *   - 巻番号は 0〜999、小数は3桁まで（"999999999 kindle" は拒否）
+ *   - 1つの範囲は 999巻まで、入力全体で 1500巻まで
  */
-import { nfkc, normalizeLabel } from '../volume/label';
+import { LIMITS } from '../limits';
+import { nfkc, parseVolumeLabel, type VolumeIdent } from '../volume/volumeKey';
 
 export interface StoreRef {
   id: string;
@@ -21,10 +26,12 @@ export type RangeAction =
   | { type: 'clear' };
 
 export interface RangeOp {
-  /** 対象の巻ラベル（"1"〜"10" など、正規化済み）。 */
+  /** 対象の巻 */
+  targets: VolumeIdent[];
+  /** 対象の巻の表示ラベル（後方互換） */
   labels: string[];
   actions: RangeAction[];
-  /** 元の入力の該当部分（エラー表示やログ用）。 */
+  /** 元の入力の該当部分（エラー表示やログ用） */
   source: string;
 }
 
@@ -65,24 +72,27 @@ export function resolveToken(token: string, stores: readonly StoreRef[]): RangeA
 }
 
 export interface ParseRangeOptions {
-  /** 1つの範囲で指定できる最大の巻数（既定 1000）。 */
+  /** 1つの範囲で指定できる最大の巻数（既定 LIMITS.maxRangeSpan） */
   maxSpan?: number;
+  /** 入力全体で指定できる巻数（既定 LIMITS.maxTargetsPerInput） */
+  maxTargets?: number;
 }
 
-export function parseRangeText(
-  text: string,
-  stores: readonly StoreRef[],
-  opts: ParseRangeOptions = {},
-): ParseRangeResult {
-  const maxSpan = opts.maxSpan ?? 1000;
+const MAX_INPUT_LENGTH = 5000;
+
+export function parseRangeText(text: string, stores: readonly StoreRef[], opts: ParseRangeOptions = {}): ParseRangeResult {
+  const maxSpan = Math.min(opts.maxSpan ?? LIMITS.maxRangeSpan, LIMITS.maxRangeSpan);
+  const maxTargets = Math.min(opts.maxTargets ?? LIMITS.maxTargetsPerInput, LIMITS.maxTargetsPerInput);
   const ops: RangeOp[] = [];
   const errors: RangeError[] = [];
 
-  // 改行は区切りとして使うので、nfkc()（空白をまとめる）ではなく normalize だけにする
+  const raw = String(text ?? '');
+  if (raw.length > MAX_INPUT_LENGTH) {
+    return { ops, errors: [{ source: '', message: `入力が長すぎます（${MAX_INPUT_LENGTH}文字まで）` }] };
+  }
+  // 改行は区切りとして使うので、nfkc()（空白をまとめる）ではなく normalize だけにする。
   // 「ー」はストア名（コミックシーモア）にも出てくるので、数字に挟まれたときだけ範囲記号とみなす
-  const normalized = String(text ?? '')
-    .normalize('NFKC')
-    .replace(/(\d)\s*[〜～~ー－–—-]\s*(?=\d)/g, '$1-');
+  const normalized = raw.normalize('NFKC').replace(/(\d)\s*[〜～~ー－–—-]\s*(?=\d)/g, '$1-');
   const segments = normalized
     .split(/[,、;；\n]+/)
     .map((s) => s.trim())
@@ -90,13 +100,12 @@ export function parseRangeText(
 
   if (!segments.length) return { ops, errors: [{ source: '', message: '入力が空です' }] };
 
+  let total = 0;
   for (const seg of segments) {
-    // "1 - 10 kindle" のような空白入りの範囲を先に詰める
-    const compact = seg.replace(/^(\d+)\s*-\s*(\d+)/, '$1-$2');
-    const parts = compact.split(/\s+/);
+    const parts = seg.split(/\s+/);
     let head = parts.shift()!;
     // "1-10kindle" のように詰めて書かれた場合
-    const glued = /^(\d+(?:\.\d+)?(?:-\d+)?)([^\d.\-].*)$/.exec(head);
+    const glued = /^(\d+(?:\.\d+)?(?:-\d+(?:\.\d+)?)?)([^\d.\-].*)$/.exec(head);
     if (glued) {
       head = glued[1]!;
       parts.unshift(glued[2]!);
@@ -118,26 +127,45 @@ export function parseRangeText(
       continue;
     }
 
-    const range = /^(\d+)-(\d+)$/.exec(head);
-    let labels: string[];
+    let targets: VolumeIdent[];
+    const range = /^(\d+(?:\.\d+)?)-(\d+(?:\.\d+)?)$/.exec(head);
     if (range) {
-      let a = Number(range[1]);
-      let b = Number(range[2]);
+      if (range[1]!.includes('.') || range[2]!.includes('.')) {
+        errors.push({ source: seg, message: '範囲には整数を使ってください（10.5巻は単独で指定）' });
+        continue;
+      }
+      const ra = parseVolumeLabel(range[1]);
+      const rb = parseVolumeLabel(range[2]);
+      if (!ra.ok || !rb.ok) {
+        errors.push({ source: seg, message: (!ra.ok ? ra.error : '') || (!rb.ok ? rb.error : '') });
+        continue;
+      }
+      let a = ra.value.sortValue;
+      let b = rb.value.sortValue;
       if (a > b) [a, b] = [b, a];
-      if (a < 0 || b - a + 1 > maxSpan) {
-        errors.push({ source: seg, message: `範囲が大きすぎます（最大${maxSpan}巻）` });
+      if (b - a + 1 > maxSpan) {
+        errors.push({ source: seg, message: `1つの範囲は${maxSpan}巻までです` });
         continue;
       }
-      labels = Array.from({ length: b - a + 1 }, (_, i) => String(a + i));
+      targets = [];
+      for (let n = a; n <= b; n++) {
+        const r = parseVolumeLabel(String(n));
+        if (r.ok) targets.push(r.value);
+      }
     } else {
-      const label = normalizeLabel(head);
-      if (!label) {
-        errors.push({ source: seg, message: '巻の指定が読めません' });
+      const r = parseVolumeLabel(head);
+      if (!r.ok) {
+        errors.push({ source: seg, message: r.error });
         continue;
       }
-      labels = [label];
+      targets = [r.value];
     }
-    ops.push({ labels, actions: dedupe(actions), source: seg });
+    total += targets.length;
+    if (total > maxTargets) {
+      errors.push({ source: seg, message: `1回で変更できるのは${maxTargets}巻までです` });
+      break;
+    }
+    ops.push({ targets, labels: targets.map((t) => t.label), actions: dedupe(actions), source: seg });
   }
   return { ops, errors };
 }

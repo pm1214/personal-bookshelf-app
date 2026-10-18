@@ -102,7 +102,7 @@ describe('toImportPlan / newVolumesSince', () => {
     expect(plan.series).toMatchObject({ title: '星屑ノート', author_text: '架空 太郎', label: '架空コミックスDIGITAL', kind: 'manga', is_serial: true, source: 'rakuten_kobo' });
     // 検索結果に無かった4巻も、商品情報なしで作る
     expect(plan.volumes.map((v) => v.label)).toEqual(['1', '2', '3', '4', '5', '6', '7']);
-    expect(plan.volumes[3]).toEqual({ label: '4', sort_key: 4, release_date: null, title: null });
+    expect(plan.volumes[3]).toEqual({ volume_key: 'n:4', label: '4', sort_group: 0, sort_key: 4, release_date: null, title: null });
     expect(plan.volumes[0]!.release_date).toBe('2019-12-10');
     expect(plan.variants).toHaveLength(7);
     expect(plan.variants.filter((v) => v.edition === 'special')).toHaveLength(1);

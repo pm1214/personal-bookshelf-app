@@ -11,7 +11,8 @@
  *
  * 画面ではこの結果を候補として見せ、ユーザーが確認・修正してから登録する。
  */
-import { compareVolumes, nfkc, sortKeyForLabel } from '../volume/label';
+import { nfkc } from '../volume/label';
+import { compareIdent, identOrThrow, isCountedNumber } from '../volume/volumeKey';
 import { parseVolumeTitle, seriesKey } from '../volume/parseVolumeTitle';
 import type { KoboItem } from './rakutenKobo';
 import { parseSalesDate, type SalesDate } from './salesDate';
@@ -29,7 +30,10 @@ export interface CatalogEdition {
 }
 
 export interface CatalogVolume {
+  /** 巻の識別子（volumeKey の規則） */
+  key: string;
   label: string;
+  sortGroup: number;
   sortKey: number;
   /** 代表の商品（通常版で一番早いもの） */
   primary: CatalogEdition;
@@ -137,7 +141,9 @@ export function groupIntoSeries(items: readonly KoboItem[], opts: { query?: stri
       } else if (p.volume === null) {
         unparsed.push(p);
       } else {
-        byLabel.set(p.label, [...(byLabel.get(p.label) ?? []), p]);
+        // 巻キーでまとめる（「前」と「前編」、「１０」と「10」を同じ巻にする）
+        const k = identOrThrow(p.label).key;
+        byLabel.set(k, [...(byLabel.get(k) ?? []), p]);
       }
     }
 
@@ -145,11 +151,11 @@ export function groupIntoSeries(items: readonly KoboItem[], opts: { query?: stri
     let inferredOne = false;
     // 番号のない通常版が1つだけで、1巻が無く、他のどの巻より早く出ていれば1巻とみなす
     const regularUnparsed = unparsed.filter((p) => !p.special);
-    if (byLabel.size > 0 && !byLabel.has('1') && regularUnparsed.length === 1) {
+    if (byLabel.size > 0 && !byLabel.has('n:1') && regularUnparsed.length === 1) {
       const u = regularUnparsed[0]!;
       const earliest = Math.min(...[...byLabel.values()].flat().map((p) => dateValue(p.date)));
       if (dateValue(u.date) <= earliest) {
-        byLabel.set('1', [{ ...u, label: '1', volume: 1 }]);
+        byLabel.set('n:1', [{ ...u, label: '1', volume: 1 }]);
         unparsed.splice(unparsed.indexOf(u), 1);
         inferredOne = true;
         notes.push('番号のない商品を1巻と推定しました');
@@ -159,7 +165,7 @@ export function groupIntoSeries(items: readonly KoboItem[], opts: { query?: stri
     let singleBook = false;
     if (byLabel.size === 0 && unparsed.length >= 1 && unparsed.every((p) => p.baseTitle === unparsed[0]!.baseTitle)) {
       const sorted = [...unparsed].sort((a, b) => Number(a.special) - Number(b.special) || dateValue(a.date) - dateValue(b.date));
-      byLabel.set('1', sorted.map((p) => ({ ...p, label: '1', volume: 1 })));
+      byLabel.set('n:1', sorted.map((p) => ({ ...p, label: '1', volume: 1 })));
       unparsed.length = 0;
       singleBook = true;
     }
@@ -180,19 +186,22 @@ export function groupIntoSeries(items: readonly KoboItem[], opts: { query?: stri
       reserved: p.item.salesType === 1,
     });
 
-    const volumes: CatalogVolume[] = [...byLabel.entries()].map(([label, ps]) => {
+    const volumes: CatalogVolume[] = [...byLabel.entries()].map(([, ps]) => {
       const sorted = [...ps].sort((a, b) => Number(a.special) - Number(b.special) || dateValue(a.date) - dateValue(b.date));
+      const id = identOrThrow(sorted[0]!.label);
       return {
-        label,
-        sortKey: sortKeyForLabel(label),
+        key: id.key,
+        label: id.label,
+        sortGroup: id.sortGroup,
+        sortKey: id.sortValue,
         primary: toEdition(sorted[0]!),
         others: sorted.slice(1).map(toEdition),
-        inferred: inferredOne && label === '1',
+        inferred: inferredOne && id.key === 'n:1',
       };
     });
-    volumes.sort(compareVolumes);
+    volumes.sort((a, b) => compareIdent({ ...a, sortValue: a.sortKey }, { ...b, sortValue: b.sortKey }));
 
-    const ints = volumes.map((v) => Number(v.label)).filter((n) => Number.isInteger(n) && n >= 1);
+    const ints = volumes.filter((v) => isCountedNumber({ kind: v.key.startsWith('n:') ? 'number' : 'named', sortValue: v.sortKey })).map((v) => v.sortKey);
     const maxVolume = ints.length ? Math.max(...ints) : 0;
     const have = new Set(ints);
     const missingNumbers = singleBook ? [] : Array.from({ length: maxVolume }, (_, i) => i + 1).filter((n) => !have.has(n));
@@ -282,7 +291,7 @@ export interface ImportPlan {
     source: 'rakuten_kobo';
   };
   /** 検索結果に無かった番号の巻も含む（商品情報なし。抜け巻判定に必要） */
-  volumes: Array<{ label: string; sort_key: number; release_date: string | null; title: string | null }>;
+  volumes: Array<{ volume_key: string; label: string; sort_group: number; sort_key: number; release_date: string | null; title: string | null }>;
   variants: Array<{ volume_label: string; format: 'ebook'; edition: Edition; note: string | null }>;
   identifiers: Array<{ volume_label: string; variant_index: number; id_type: 'kobo'; value: string }>;
   /** user_series.known_total の初期値の提案 */
@@ -314,23 +323,23 @@ export function toImportPlan(
     volumes: [],
     variants: [],
     identifiers: [],
-    suggestedKnownTotal: Math.max(0, ...vols.map((v) => Number(v.label)).filter((n) => Number.isInteger(n))),
+    suggestedKnownTotal: Math.max(0, ...vols.filter((v) => v.key.startsWith('n:') && Number.isInteger(v.sortKey)).map((v) => v.sortKey)),
   };
   if (opts.fillGaps ?? true) {
     const max = plan.suggestedKnownTotal;
     for (const n of c.missingNumbers) {
-      if (n <= max) plan.volumes.push({ label: String(n), sort_key: n, release_date: null, title: null });
+      if (n <= max) plan.volumes.push({ volume_key: `n:${n}`, label: String(n), sort_group: 0, sort_key: n, release_date: null, title: null });
     }
   }
   for (const v of vols) {
-    plan.volumes.push({ label: v.label, sort_key: v.sortKey, release_date: v.primary.releaseDate?.date ?? null, title: v.primary.title.slice(0, 200) });
+    plan.volumes.push({ volume_key: v.key, label: v.label, sort_group: v.sortGroup, sort_key: v.sortKey, release_date: v.primary.releaseDate?.date ?? null, title: v.primary.title.slice(0, 200) });
     for (const e of [v.primary, ...v.others]) {
       const variant_index = plan.variants.length;
       plan.variants.push({ volume_label: v.label, format: 'ebook', edition: e.edition, note: e.edition === 'special' ? e.title.slice(0, 100) : null });
       plan.identifiers.push({ volume_label: v.label, variant_index, id_type: 'kobo', value: e.itemNumber });
     }
   }
-  plan.volumes.sort((a, b) => a.sort_key - b.sort_key || a.label.localeCompare(b.label, 'ja'));
+  plan.volumes.sort((a, b) => compareIdent({ sortGroup: a.sort_group, sortValue: a.sort_key, label: a.label }, { sortGroup: b.sort_group, sortValue: b.sort_key, label: b.label }));
   return plan;
 }
 

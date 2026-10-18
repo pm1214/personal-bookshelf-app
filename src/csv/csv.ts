@@ -10,7 +10,8 @@
  * - 購入予定・既読は 1 / ○ / true / yes を真とみなす
  * - Excel で開けるよう、書き出しは BOM 付き UTF-8
  */
-import { nfkc, normalizeLabel } from '../volume/label';
+import { nfkc } from '../volume/label';
+import { parseVolumeLabel } from '../volume/volumeKey';
 import { resolveToken, type StoreRef } from '../range/parseRangeText';
 
 export const CSV_HEADER = ['作品', '種類', '巻', 'ストア', '購入予定', '既読'] as const;
@@ -124,11 +125,11 @@ export function importCsv(text: string, stores: readonly StoreRef[], opts: { max
     const line = i + 2;
     const get = (j: number) => (j >= 0 ? nfkc(r[j] ?? '') : '');
     const title = get(idx.title).replace(/^'/, '');
-    const label = normalizeLabel(get(idx.label));
+    const parsedLabel = parseVolumeLabel(get(idx.label));
     if (!title) return errors.push({ line, message: '作品名が空です' });
     if (title.length > 200) return errors.push({ line, message: '作品名が長すぎます（200文字まで）' });
-    if (!label) return errors.push({ line, message: '巻が空です' });
-    if (label.length > 20) return errors.push({ line, message: '巻の表記が長すぎます（20文字まで）' });
+    if (!parsedLabel.ok) return errors.push({ line, message: parsedLabel.error });
+    const label = parsedLabel.value.label;
 
     const kindRaw = get(idx.kind);
     const kind = (KINDS as readonly string[]).includes(kindRaw) ? (kindRaw as Kind) : kindRaw ? null : '漫画';
@@ -141,7 +142,7 @@ export function importCsv(text: string, stores: readonly StoreRef[], opts: { max
         if (!storeIds.includes(a.storeId)) storeIds.push(a.storeId);
       } else unknownStores.add(name);
     }
-    const key = `${title}\u0000${label}`;
+    const key = `${title}\u0000${parsedLabel.value.key}`;
     if (seen.has(key)) return errors.push({ line, message: `「${title}」${label}巻が2回出てきます` });
     seen.add(key);
 

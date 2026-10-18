@@ -12,6 +12,7 @@
  * 100% は取れない前提。取れなかった場合は volume=null を返し、画面でユーザーが直す。
  */
 import { kanjiToInt, nfkc, UPPER_LOWER } from './label';
+import { parseVolumeLabel, type VolumeIdent } from './volumeKey';
 
 export type ItemKind = 'volume' | 'episode' | 'bundle';
 
@@ -38,7 +39,6 @@ const NOISE_RE = /[【[][^】\]]*[】\]]/g;
 const NON_VOLUME_PAREN_RE = /[(（](?![\s\d.上中下前後]+[)）])[^)）]*[)）]/g;
 const EDITION_WORD_RE = /\S*(特装|限定|特別|通常|デラックス|完全|新装|愛蔵|カラー)版/g;
 
-const MAX_VOLUME = 999;
 
 interface Rule {
   name: string;
@@ -46,7 +46,11 @@ interface Rule {
   read: (g: string) => { volume: number; label: string } | null;
 }
 
-const num = (g: string) => ({ volume: Number(g), label: String(Number(g)) });
+/** 数字の巻：上限・小数桁を巻キーの規則で確かめる（10.501 まで、999 まで） */
+const num = (g: string) => {
+  const r = parseVolumeLabel(g);
+  return r.ok && r.value.kind === 'number' ? { volume: r.value.sortValue, label: r.value.label } : null;
+};
 
 const RULES: Rule[] = [
   { name: '巻', re: /第?\s*(\d+(?:\.\d+)?)\s*巻/, read: num },
@@ -93,7 +97,7 @@ export function parseVolumeTitle(title: string): ParsedTitle {
     const m = rule.re.exec(t);
     if (!m) continue;
     const r = rule.read(m[1]!);
-    if (!r || r.volume > MAX_VOLUME) continue; // 年号（2024）などの誤検出を避ける
+    if (!r) continue; // 上限超え（年号の 2024 など）や小数4桁以上は巻番号とみなさない
     const base = `${t.slice(0, m.index)} ${t.slice(m.index + m[0].length)}`;
     return { ...r, rule: rule.name, kind, special, baseTitle: cleanBase(base) };
   }
@@ -105,4 +109,11 @@ export function seriesKey(baseTitle: string): string {
   return nfkc(baseTitle)
     .toLowerCase()
     .replace(/[\s!！?？・:：\-－~〜「」『』"'.,、。]/g, '');
+}
+
+/** 解析結果の巻キー（巻番号が取れなかったときは null）。 */
+export function identOfParsed(p: ParsedTitle): VolumeIdent | null {
+  if (!p.label) return null;
+  const r = parseVolumeLabel(p.label);
+  return r.ok ? r.value : null;
 }
