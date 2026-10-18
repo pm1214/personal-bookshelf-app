@@ -196,13 +196,13 @@ describe('⑤ 直せるものは直して警告（データは捨てない）', 
   it('既刊数までの巻が欠けていれば空の巻を補う（記録は変えない）', () => {
     const j = base();
     j.series[7].volumes = []; // 全部未購入・既刊6
-    expect(ok(validateBackup(j, { newId })).series[7].volumes.map((v) => v.label)).toEqual(['1', '2', '3', '4', '5', '6']);
+    expect(ok(validateBackup(j, { newId })).series[7]!.volumes.map((v) => v.label)).toEqual(['1', '2', '3', '4', '5', '6']);
   });
 
   it('所持しているのに購入予定、の矛盾は予定を外す', () => {
     const j = base();
     j.series[0].volumes[0].planned = true;
-    expect(ok(validateBackup(j, { newId })).series[0].volumes[0].planned).toBe(false);
+    expect(ok(validateBackup(j, { newId })).series[0]!.volumes[0]!.planned).toBe(false);
   });
 });
 
@@ -215,7 +215,7 @@ describe('⑤ 旧形式（デモv1）からの移行', () => {
     const r = validateBackup(v1, { newId });
     const d = ok(r);
     expect(r.ok && r.sourceVersion).toBe(1);
-    expect(d.series[0].volumes.map((v) => [v.label, v.stores])).toEqual([
+    expect(d.series[0]!.volumes.map((v) => [v.label, v.stores])).toEqual([
       ['1', ['kindle']], ['2', ['v1s8']], ['3', []], ['4', []], ['5', []], ['7', ['kobo']],
     ]);
     expect(d.stores.find((s) => s.id === 'v1s8')!.name).toBe('謎ストア');
