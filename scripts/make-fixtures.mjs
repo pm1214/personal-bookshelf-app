@@ -21,10 +21,11 @@ const sortKey = (label, i) => (/^\d+(\.\d+)?$/.test(label) ? Number(label) : { ä
 const vol = (label, stores = [], extra = {}) => ({ label: String(label), stores, planned: false, read: false, ...extra });
 const range = (a, b, f) => Array.from({ length: b - a + 1 }, (_, i) => f(a + i));
 const series = (title, kind, total, volumes, note) => ({
-  id: title.replace(/[^\w]/g, '').slice(0, 20) || `s${Math.abs(hash(title))}`,
+  id: slug(title),
   title, kind, total, main: '', note,
-  volumes: volumes.map((v, i) => ({ ...v, sort: sortKey(v.label, total + 0.9 + i * 0.01) })),
+  volumes: volumes.map((v, i) => ({ id: `${slug(title)}-v${i + 1}`, ...v, sort: sortKey(v.label, total + 0.9 + i * 0.01) })),
 });
+function slug(title) { return title.replace(/[^\w]/g, '').slice(0, 20) || `s${Math.abs(hash(title))}`; }
 function hash(s) { let h = 0; for (const c of s) h = (h * 31 + c.codePointAt(0)) | 0; return h; }
 
 const data = {
