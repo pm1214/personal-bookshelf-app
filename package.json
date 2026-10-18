@@ -1,0 +1,22 @@
+{
+  "name": "bookshelf-hub-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "BookShelf Hub のロジック部分（巻番号解析・まとめて入力・CSV）とDBマイグレーション",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "fixtures": "node scripts/make-fixtures.mjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
+    "@types/node": "22.18.0",
+    "typescript": "5.8.3",
+    "vitest": "3.2.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,3398 @@
+{
+  "version": 2,
+  "stores": [
+    {
+      "id": "kindle",
+      "name": "Kindle",
+      "color": "#E07B1F",
+      "alias": [
+        "キンドル",
+        "amazon"
+      ]
+    },
+    {
+      "id": "kobo",
+      "name": "Kobo",
+      "color": "#2F86D1",
+      "alias": [
+        "楽天",
+        "コボ"
+      ]
+    },
+    {
+      "id": "ebj",
+      "name": "ebookjapan",
+      "color": "#D6457A",
+      "alias": [
+        "ebj"
+      ]
+    },
+    {
+      "id": "bw",
+      "name": "BOOK☆WALKER",
+      "color": "#1E9C84",
+      "alias": [
+        "bw",
+        "bookwalker"
+      ]
+    },
+    {
+      "id": "paper",
+      "name": "紙の本",
+      "color": "#9A6B3F",
+      "alias": [
+        "紙"
+      ]
+    },
+    {
+      "id": "cmoa",
+      "name": "コミックシーモア",
+      "color": "#3F9E3A",
+      "alias": [
+        "シーモア"
+      ]
+    }
+  ],
+  "series": [
+    {
+      "id": "s399423500",
+      "title": "【テスト】仕様の例",
+      "kind": "漫画",
+      "total": 18,
+      "main": "",
+      "note": "1〜10 Kindle、11〜15 Kobo、16 ebj、17 未購入、18 両方",
+      "volumes": [
+        {
+          "label": "1",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 1
+        },
+        {
+          "label": "2",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 2
+        },
+        {
+          "label": "3",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 3
+        },
+        {
+          "label": "4",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 4
+        },
+        {
+          "label": "5",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 5
+        },
+        {
+          "label": "6",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 6
+        },
+        {
+          "label": "7",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 7
+        },
+        {
+          "label": "8",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 8
+        },
+        {
+          "label": "9",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 9
+        },
+        {
+          "label": "10",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 10
+        },
+        {
+          "label": "11",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 11
+        },
+        {
+          "label": "12",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 12
+        },
+        {
+          "label": "13",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 13
+        },
+        {
+          "label": "14",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 14
+        },
+        {
+          "label": "15",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 15
+        },
+        {
+          "label": "16",
+          "stores": [
+            "ebj"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 16
+        },
+        {
+          "label": "17",
+          "stores": [],
+          "planned": false,
+          "read": false,
+          "sort": 17
+        },
+        {
+          "label": "18",
+          "stores": [
+            "kindle",
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 18
+        }
+      ]
+    },
+    {
+      "id": "300",
+      "title": "【テスト】300巻の長期連載",
+      "kind": "漫画",
+      "total": 300,
+      "main": "",
+      "note": "数百巻でもグリッドが重くならないか。50の倍数が抜け、300巻は予定",
+      "volumes": [
+        {
+          "label": "1",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 1
+        },
+        {
+          "label": "2",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 2
+        },
+        {
+          "label": "3",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 3
+        },
+        {
+          "label": "4",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 4
+        },
+        {
+          "label": "5",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 5
+        },
+        {
+          "label": "6",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 6
+        },
+        {
+          "label": "7",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 7
+        },
+        {
+          "label": "8",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 8
+        },
+        {
+          "label": "9",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 9
+        },
+        {
+          "label": "10",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 10
+        },
+        {
+          "label": "11",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 11
+        },
+        {
+          "label": "12",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 12
+        },
+        {
+          "label": "13",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 13
+        },
+        {
+          "label": "14",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 14
+        },
+        {
+          "label": "15",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 15
+        },
+        {
+          "label": "16",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 16
+        },
+        {
+          "label": "17",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 17
+        },
+        {
+          "label": "18",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 18
+        },
+        {
+          "label": "19",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 19
+        },
+        {
+          "label": "20",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 20
+        },
+        {
+          "label": "21",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 21
+        },
+        {
+          "label": "22",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 22
+        },
+        {
+          "label": "23",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 23
+        },
+        {
+          "label": "24",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 24
+        },
+        {
+          "label": "25",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 25
+        },
+        {
+          "label": "26",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 26
+        },
+        {
+          "label": "27",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 27
+        },
+        {
+          "label": "28",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 28
+        },
+        {
+          "label": "29",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 29
+        },
+        {
+          "label": "30",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 30
+        },
+        {
+          "label": "31",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 31
+        },
+        {
+          "label": "32",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 32
+        },
+        {
+          "label": "33",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 33
+        },
+        {
+          "label": "34",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 34
+        },
+        {
+          "label": "35",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 35
+        },
+        {
+          "label": "36",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 36
+        },
+        {
+          "label": "37",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 37
+        },
+        {
+          "label": "38",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 38
+        },
+        {
+          "label": "39",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 39
+        },
+        {
+          "label": "40",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 40
+        },
+        {
+          "label": "41",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 41
+        },
+        {
+          "label": "42",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 42
+        },
+        {
+          "label": "43",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 43
+        },
+        {
+          "label": "44",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 44
+        },
+        {
+          "label": "45",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 45
+        },
+        {
+          "label": "46",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 46
+        },
+        {
+          "label": "47",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 47
+        },
+        {
+          "label": "48",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 48
+        },
+        {
+          "label": "49",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 49
+        },
+        {
+          "label": "50",
+          "stores": [],
+          "planned": false,
+          "read": true,
+          "sort": 50
+        },
+        {
+          "label": "51",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 51
+        },
+        {
+          "label": "52",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 52
+        },
+        {
+          "label": "53",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 53
+        },
+        {
+          "label": "54",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 54
+        },
+        {
+          "label": "55",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 55
+        },
+        {
+          "label": "56",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 56
+        },
+        {
+          "label": "57",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 57
+        },
+        {
+          "label": "58",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 58
+        },
+        {
+          "label": "59",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 59
+        },
+        {
+          "label": "60",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 60
+        },
+        {
+          "label": "61",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 61
+        },
+        {
+          "label": "62",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 62
+        },
+        {
+          "label": "63",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 63
+        },
+        {
+          "label": "64",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 64
+        },
+        {
+          "label": "65",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 65
+        },
+        {
+          "label": "66",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 66
+        },
+        {
+          "label": "67",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 67
+        },
+        {
+          "label": "68",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 68
+        },
+        {
+          "label": "69",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 69
+        },
+        {
+          "label": "70",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 70
+        },
+        {
+          "label": "71",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 71
+        },
+        {
+          "label": "72",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 72
+        },
+        {
+          "label": "73",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 73
+        },
+        {
+          "label": "74",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 74
+        },
+        {
+          "label": "75",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 75
+        },
+        {
+          "label": "76",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 76
+        },
+        {
+          "label": "77",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 77
+        },
+        {
+          "label": "78",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 78
+        },
+        {
+          "label": "79",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 79
+        },
+        {
+          "label": "80",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 80
+        },
+        {
+          "label": "81",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 81
+        },
+        {
+          "label": "82",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 82
+        },
+        {
+          "label": "83",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 83
+        },
+        {
+          "label": "84",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 84
+        },
+        {
+          "label": "85",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 85
+        },
+        {
+          "label": "86",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 86
+        },
+        {
+          "label": "87",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 87
+        },
+        {
+          "label": "88",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 88
+        },
+        {
+          "label": "89",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 89
+        },
+        {
+          "label": "90",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 90
+        },
+        {
+          "label": "91",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 91
+        },
+        {
+          "label": "92",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 92
+        },
+        {
+          "label": "93",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 93
+        },
+        {
+          "label": "94",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 94
+        },
+        {
+          "label": "95",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 95
+        },
+        {
+          "label": "96",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 96
+        },
+        {
+          "label": "97",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 97
+        },
+        {
+          "label": "98",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 98
+        },
+        {
+          "label": "99",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 99
+        },
+        {
+          "label": "100",
+          "stores": [],
+          "planned": false,
+          "read": true,
+          "sort": 100
+        },
+        {
+          "label": "101",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 101
+        },
+        {
+          "label": "102",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 102
+        },
+        {
+          "label": "103",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 103
+        },
+        {
+          "label": "104",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 104
+        },
+        {
+          "label": "105",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 105
+        },
+        {
+          "label": "106",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 106
+        },
+        {
+          "label": "107",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 107
+        },
+        {
+          "label": "108",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 108
+        },
+        {
+          "label": "109",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 109
+        },
+        {
+          "label": "110",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 110
+        },
+        {
+          "label": "111",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 111
+        },
+        {
+          "label": "112",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 112
+        },
+        {
+          "label": "113",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 113
+        },
+        {
+          "label": "114",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 114
+        },
+        {
+          "label": "115",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 115
+        },
+        {
+          "label": "116",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 116
+        },
+        {
+          "label": "117",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 117
+        },
+        {
+          "label": "118",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 118
+        },
+        {
+          "label": "119",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 119
+        },
+        {
+          "label": "120",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 120
+        },
+        {
+          "label": "121",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 121
+        },
+        {
+          "label": "122",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 122
+        },
+        {
+          "label": "123",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 123
+        },
+        {
+          "label": "124",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 124
+        },
+        {
+          "label": "125",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 125
+        },
+        {
+          "label": "126",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 126
+        },
+        {
+          "label": "127",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 127
+        },
+        {
+          "label": "128",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 128
+        },
+        {
+          "label": "129",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 129
+        },
+        {
+          "label": "130",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 130
+        },
+        {
+          "label": "131",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 131
+        },
+        {
+          "label": "132",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 132
+        },
+        {
+          "label": "133",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 133
+        },
+        {
+          "label": "134",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 134
+        },
+        {
+          "label": "135",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 135
+        },
+        {
+          "label": "136",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 136
+        },
+        {
+          "label": "137",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 137
+        },
+        {
+          "label": "138",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 138
+        },
+        {
+          "label": "139",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 139
+        },
+        {
+          "label": "140",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 140
+        },
+        {
+          "label": "141",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 141
+        },
+        {
+          "label": "142",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 142
+        },
+        {
+          "label": "143",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 143
+        },
+        {
+          "label": "144",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 144
+        },
+        {
+          "label": "145",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 145
+        },
+        {
+          "label": "146",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 146
+        },
+        {
+          "label": "147",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 147
+        },
+        {
+          "label": "148",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 148
+        },
+        {
+          "label": "149",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 149
+        },
+        {
+          "label": "150",
+          "stores": [],
+          "planned": false,
+          "read": true,
+          "sort": 150
+        },
+        {
+          "label": "151",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 151
+        },
+        {
+          "label": "152",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 152
+        },
+        {
+          "label": "153",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 153
+        },
+        {
+          "label": "154",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 154
+        },
+        {
+          "label": "155",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 155
+        },
+        {
+          "label": "156",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 156
+        },
+        {
+          "label": "157",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 157
+        },
+        {
+          "label": "158",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 158
+        },
+        {
+          "label": "159",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 159
+        },
+        {
+          "label": "160",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 160
+        },
+        {
+          "label": "161",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 161
+        },
+        {
+          "label": "162",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 162
+        },
+        {
+          "label": "163",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 163
+        },
+        {
+          "label": "164",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 164
+        },
+        {
+          "label": "165",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 165
+        },
+        {
+          "label": "166",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 166
+        },
+        {
+          "label": "167",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 167
+        },
+        {
+          "label": "168",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 168
+        },
+        {
+          "label": "169",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 169
+        },
+        {
+          "label": "170",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 170
+        },
+        {
+          "label": "171",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 171
+        },
+        {
+          "label": "172",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 172
+        },
+        {
+          "label": "173",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 173
+        },
+        {
+          "label": "174",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 174
+        },
+        {
+          "label": "175",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 175
+        },
+        {
+          "label": "176",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 176
+        },
+        {
+          "label": "177",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 177
+        },
+        {
+          "label": "178",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 178
+        },
+        {
+          "label": "179",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 179
+        },
+        {
+          "label": "180",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 180
+        },
+        {
+          "label": "181",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 181
+        },
+        {
+          "label": "182",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 182
+        },
+        {
+          "label": "183",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 183
+        },
+        {
+          "label": "184",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 184
+        },
+        {
+          "label": "185",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 185
+        },
+        {
+          "label": "186",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 186
+        },
+        {
+          "label": "187",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 187
+        },
+        {
+          "label": "188",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 188
+        },
+        {
+          "label": "189",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 189
+        },
+        {
+          "label": "190",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 190
+        },
+        {
+          "label": "191",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 191
+        },
+        {
+          "label": "192",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 192
+        },
+        {
+          "label": "193",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 193
+        },
+        {
+          "label": "194",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 194
+        },
+        {
+          "label": "195",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 195
+        },
+        {
+          "label": "196",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 196
+        },
+        {
+          "label": "197",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 197
+        },
+        {
+          "label": "198",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 198
+        },
+        {
+          "label": "199",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 199
+        },
+        {
+          "label": "200",
+          "stores": [],
+          "planned": false,
+          "read": false,
+          "sort": 200
+        },
+        {
+          "label": "201",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 201
+        },
+        {
+          "label": "202",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 202
+        },
+        {
+          "label": "203",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 203
+        },
+        {
+          "label": "204",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 204
+        },
+        {
+          "label": "205",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 205
+        },
+        {
+          "label": "206",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 206
+        },
+        {
+          "label": "207",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 207
+        },
+        {
+          "label": "208",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 208
+        },
+        {
+          "label": "209",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 209
+        },
+        {
+          "label": "210",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 210
+        },
+        {
+          "label": "211",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 211
+        },
+        {
+          "label": "212",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 212
+        },
+        {
+          "label": "213",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 213
+        },
+        {
+          "label": "214",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 214
+        },
+        {
+          "label": "215",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 215
+        },
+        {
+          "label": "216",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 216
+        },
+        {
+          "label": "217",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 217
+        },
+        {
+          "label": "218",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 218
+        },
+        {
+          "label": "219",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 219
+        },
+        {
+          "label": "220",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 220
+        },
+        {
+          "label": "221",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 221
+        },
+        {
+          "label": "222",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 222
+        },
+        {
+          "label": "223",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 223
+        },
+        {
+          "label": "224",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 224
+        },
+        {
+          "label": "225",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 225
+        },
+        {
+          "label": "226",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 226
+        },
+        {
+          "label": "227",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 227
+        },
+        {
+          "label": "228",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 228
+        },
+        {
+          "label": "229",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 229
+        },
+        {
+          "label": "230",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 230
+        },
+        {
+          "label": "231",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 231
+        },
+        {
+          "label": "232",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 232
+        },
+        {
+          "label": "233",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 233
+        },
+        {
+          "label": "234",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 234
+        },
+        {
+          "label": "235",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 235
+        },
+        {
+          "label": "236",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 236
+        },
+        {
+          "label": "237",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 237
+        },
+        {
+          "label": "238",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 238
+        },
+        {
+          "label": "239",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 239
+        },
+        {
+          "label": "240",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 240
+        },
+        {
+          "label": "241",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 241
+        },
+        {
+          "label": "242",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 242
+        },
+        {
+          "label": "243",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 243
+        },
+        {
+          "label": "244",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 244
+        },
+        {
+          "label": "245",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 245
+        },
+        {
+          "label": "246",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 246
+        },
+        {
+          "label": "247",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 247
+        },
+        {
+          "label": "248",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 248
+        },
+        {
+          "label": "249",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 249
+        },
+        {
+          "label": "250",
+          "stores": [],
+          "planned": false,
+          "read": false,
+          "sort": 250
+        },
+        {
+          "label": "251",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 251
+        },
+        {
+          "label": "252",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 252
+        },
+        {
+          "label": "253",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 253
+        },
+        {
+          "label": "254",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 254
+        },
+        {
+          "label": "255",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 255
+        },
+        {
+          "label": "256",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 256
+        },
+        {
+          "label": "257",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 257
+        },
+        {
+          "label": "258",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 258
+        },
+        {
+          "label": "259",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 259
+        },
+        {
+          "label": "260",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 260
+        },
+        {
+          "label": "261",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 261
+        },
+        {
+          "label": "262",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 262
+        },
+        {
+          "label": "263",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 263
+        },
+        {
+          "label": "264",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 264
+        },
+        {
+          "label": "265",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 265
+        },
+        {
+          "label": "266",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 266
+        },
+        {
+          "label": "267",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 267
+        },
+        {
+          "label": "268",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 268
+        },
+        {
+          "label": "269",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 269
+        },
+        {
+          "label": "270",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 270
+        },
+        {
+          "label": "271",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 271
+        },
+        {
+          "label": "272",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 272
+        },
+        {
+          "label": "273",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 273
+        },
+        {
+          "label": "274",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 274
+        },
+        {
+          "label": "275",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 275
+        },
+        {
+          "label": "276",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 276
+        },
+        {
+          "label": "277",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 277
+        },
+        {
+          "label": "278",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 278
+        },
+        {
+          "label": "279",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 279
+        },
+        {
+          "label": "280",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 280
+        },
+        {
+          "label": "281",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 281
+        },
+        {
+          "label": "282",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 282
+        },
+        {
+          "label": "283",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 283
+        },
+        {
+          "label": "284",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 284
+        },
+        {
+          "label": "285",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 285
+        },
+        {
+          "label": "286",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 286
+        },
+        {
+          "label": "287",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 287
+        },
+        {
+          "label": "288",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 288
+        },
+        {
+          "label": "289",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 289
+        },
+        {
+          "label": "290",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 290
+        },
+        {
+          "label": "291",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 291
+        },
+        {
+          "label": "292",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 292
+        },
+        {
+          "label": "293",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 293
+        },
+        {
+          "label": "294",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 294
+        },
+        {
+          "label": "295",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 295
+        },
+        {
+          "label": "296",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 296
+        },
+        {
+          "label": "297",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 297
+        },
+        {
+          "label": "298",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 298
+        },
+        {
+          "label": "299",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 299
+        },
+        {
+          "label": "300",
+          "stores": [],
+          "planned": true,
+          "read": false,
+          "sort": 300
+        }
+      ]
+    },
+    {
+      "id": "1050",
+      "title": "【テスト】10.5巻と0巻と外伝",
+      "kind": "ライトノベル",
+      "total": 12,
+      "main": "",
+      "note": "0巻・10.5巻・外伝の並び順。7巻だけ抜け",
+      "volumes": [
+        {
+          "label": "0",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 0
+        },
+        {
+          "label": "1",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 1
+        },
+        {
+          "label": "2",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 2
+        },
+        {
+          "label": "3",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 3
+        },
+        {
+          "label": "4",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 4
+        },
+        {
+          "label": "5",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 5
+        },
+        {
+          "label": "6",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 6
+        },
+        {
+          "label": "7",
+          "stores": [],
+          "planned": false,
+          "read": false,
+          "sort": 7
+        },
+        {
+          "label": "8",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 8
+        },
+        {
+          "label": "9",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 9
+        },
+        {
+          "label": "10",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 10
+        },
+        {
+          "label": "11",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 11
+        },
+        {
+          "label": "12",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 12
+        },
+        {
+          "label": "10.5",
+          "stores": [
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 10.5
+        },
+        {
+          "label": "外伝",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 13.040000000000001
+        },
+        {
+          "label": "短編集",
+          "stores": [],
+          "planned": true,
+          "read": false,
+          "sort": 13.05
+        }
+      ]
+    },
+    {
+      "id": "s331114406",
+      "title": "【テスト】上中下の一般書",
+      "kind": "一般書",
+      "total": 0,
+      "main": "",
+      "note": "巻数のない本。既刊数0",
+      "volumes": [
+        {
+          "label": "上",
+          "stores": [
+            "paper"
+          ],
+          "planned": false,
+          "read": true,
+          "sort": 1
+        },
+        {
+          "label": "中",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 2
+        },
+        {
+          "label": "下",
+          "stores": [],
+          "planned": true,
+          "read": false,
+          "sort": 3
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "【テスト】4ストアに分散",
+      "kind": "漫画",
+      "total": 8,
+      "main": "",
+      "note": "ストア別画面の「3つ以上に分かれている作品」に出る",
+      "volumes": [
+        {
+          "label": "1",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 1
+        },
+        {
+          "label": "2",
+          "stores": [
+            "ebj"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 2
+        },
+        {
+          "label": "3",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 3
+        },
+        {
+          "label": "4",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 4
+        },
+        {
+          "label": "5",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 5
+        },
+        {
+          "label": "6",
+          "stores": [
+            "ebj"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 6
+        },
+        {
+          "label": "7",
+          "stores": [
+            "cmoa"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 7
+        },
+        {
+          "label": "8",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 8
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "【テスト】全巻を3ストアで重複所持",
+      "kind": "漫画",
+      "total": 5,
+      "main": "",
+      "volumes": [
+        {
+          "label": "1",
+          "stores": [
+            "kindle",
+            "kobo",
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 1
+        },
+        {
+          "label": "2",
+          "stores": [
+            "kindle",
+            "kobo",
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 2
+        },
+        {
+          "label": "3",
+          "stores": [
+            "kindle",
+            "kobo",
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 3
+        },
+        {
+          "label": "4",
+          "stores": [
+            "kindle",
+            "kobo",
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 4
+        },
+        {
+          "label": "5",
+          "stores": [
+            "kindle",
+            "kobo",
+            "bw"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 5
+        }
+      ]
+    },
+    {
+      "id": "s461353728",
+      "title": "【テスト】既刊数を減らした後",
+      "kind": "漫画",
+      "total": 5,
+      "main": "",
+      "note": "既刊数5なのに9巻の記録がある。9巻は残り、割合は100%を超えない",
+      "volumes": [
+        {
+          "label": "1",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 1
+        },
+        {
+          "label": "2",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 2
+        },
+        {
+          "label": "3",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 3
+        },
+        {
+          "label": "4",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 4
+        },
+        {
+          "label": "5",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 5
+        },
+        {
+          "label": "9",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 9
+        }
+      ]
+    },
+    {
+      "id": "s417710919",
+      "title": "【テスト】全部未購入",
+      "kind": "漫画",
+      "total": 6,
+      "main": "",
+      "volumes": []
+    },
+    {
+      "id": "s337913735",
+      "title": "【テスト】全部購入予定",
+      "kind": "ライトノベル",
+      "total": 3,
+      "main": "",
+      "volumes": [
+        {
+          "label": "1",
+          "stores": [],
+          "planned": true,
+          "read": false,
+          "sort": 1
+        },
+        {
+          "label": "2",
+          "stores": [],
+          "planned": true,
+          "read": false,
+          "sort": 2
+        },
+        {
+          "label": "3",
+          "stores": [],
+          "planned": true,
+          "read": false,
+          "sort": 3
+        }
+      ]
+    },
+    {
+      "id": "bbquote",
+      "title": "【テスト】記号 <b>太字</b> & \"引用\" 'quote' , カンマ",
+      "kind": "漫画",
+      "total": 2,
+      "main": "",
+      "note": "HTMLとして実行されず、文字として表示されること",
+      "volumes": [
+        {
+          "label": "1",
+          "stores": [
+            "kindle"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 1
+        }
+      ]
+    },
+    {
+      "id": "s2024207841",
+      "title": "【テスト】とても長い作品名あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ",
+      "kind": "漫画",
+      "total": 3,
+      "main": "",
+      "note": "長い名前で表示が崩れないか",
+      "volumes": [
+        {
+          "label": "1",
+          "stores": [
+            "kobo"
+          ],
+          "planned": false,
+          "read": false,
+          "sort": 1
+        }
+      ]
+    }
+  ]
+}
